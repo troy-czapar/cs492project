@@ -1,0 +1,12 @@
+INSERT INTO UserEntries (id, displayName, email) VALUES (1, 'Luis','luis@felizmail.com');
+INSERT INTO UserEntries (id, displayName, email) VALUES (2, 'Troy','Troy@gmail.com');
+
+INSERT INTO OrderEntryEntity (id, items, status) VALUES (1, "{}",0);
+
+INSERT INTO MenuEntryEntity (id, name,description,price,image) VALUES (1, 'Cheese','All Cheese Pizza',12.99,'/images/cheese.png');
+INSERT INTO MenuEntryEntity (id, name,description,price,image) VALUES (2, 'Bacon and Ranch','Pizza with Bacon and ranch',13.99,'/images/baconranch.png');
+INSERT INTO MenuEntryEntity (id, name,description,price,image) VALUES (3, 'Meatza','Pizza with 4 meats: Bacon, Pepperoni, Salami, and Sausage',15.99,'/images/meatza.png');
+
+
+
+
