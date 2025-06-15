@@ -1,107 +1,54 @@
-$Url="http://localhost:8080/v1"
-$MenuUrl="$Url/Menu/"
-$OrdersUrl="$Url/Orders/"
-$UsersUrl="$Url/Users/"
+$Url="http://localhost:8080/pizza"
+$MenuUrl="$Url/menu/"
+$OrdersUrl="$Url/orders/"
+$UsersUrl="$Url/users/"
 
-# Try User API
-try {
-    Write-host "Adding a user to the Users API at $UsersUrl"
-    $UserEntry=[PsCustomObject]@{
-        displayName='Pedro'
-        email="Pedro@gmail.com"
-        password='123456'
-        role="customer"
-    }
-    $UserEntryPayload = $UserEntry | ConvertTo-Json
-    $AddUserOp=Invoke-RestMethod -Uri $UsersUrl -Method Post -Body $UserEntryPayload  -ContentType 'application/json'
-} catch {
-    Write-Host "Problem adding user: $($_.Exception.Message)"
+function Get-PizzaMenuEntry() {
+    Invoke-RestMethod -Uri $MenuUrl -Method Get 
 }
+function Add-PizzaMenuEntry($Name, $Description, $Price) {
 
-try {
-    $UserItems=Invoke-RestMethod -Uri $UsersUrl -Method Get
-    #$UserItems
-} catch {
-    Write-Host "Problem retrieving users: $($_.Exception.Message)"
-}
-
-# Try Menu API
-
-try {
     Write-host "Adding a menu item to the Menu API at $MenuUrl"
     $MenuEntry=[PsCustomObject]@{
-        name='Margherita Pizza'
-        description='Classic Margherita Pizza with fresh basil'
-        price=14.99
-        image='/images/margherita.png'
+        name=$Name
+        description=$Description
+        price=$Price
+        image="/images/$($Name).png"
         quantity=0
     }
     $MenuEntryPayload = $MenuEntry | ConvertTo-Json
 
-    $AddMenuItemOp=Invoke-RestMethod -Uri $MenuUrl -Method Post -Body $MenuEntryPayload  -ContentType 'application/json'
+    Invoke-RestMethod -Uri $MenuUrl -Method Post -Body $MenuEntryPayload  -ContentType 'application/json'
 
-} catch {
-    Write-Host "Problem adding menu item: $($_.Exception.Message)"
+}
+function Remove-PizzaMenuEntry($ItemId) {
+    #Write-warning "Not implemented yet"
+     Write-host "Removing a menu item from the Menu API at $MenuUrl"
+     $RemoveUrl="$MenuUrl$ItemId"
+     Invoke-RestMethod -Uri $RemoveUrl -Method Delete
+}
+function Get-PizzaOrder() {
+        Invoke-RestMethod -Uri $OrdersUrl -Method Get 
+}
+function Add-PizzaOrderItem($OrderId,$ItemId) {
+    Write-host "Adding an order item to the Orders API at $OrdersUrl"
+    $OrderAddUrl="$OrdersUrl$($OrderId)/add/$($ItemId)"
+    Invoke-RestMethod -Uri $OrderAddUrl -Method Post 
+}
+function Remove-PizzaOrderItem($OrderId,$ItemId) {
+    Write-host "Removing an order item from the Orders API at $OrdersUrl"
+    $OrderRemoveUrl="$OrdersUrl$($OrderId)/remove/$($ItemId)"
+    Invoke-RestMethod -Uri $OrderRemoveUrl -Method Post 
 }
 
-try {
-    $MenuItems=Invoke-RestMethod -Uri $MenuUrl -Method Get 
-    #$MenuItems
-} catch {
-    Write-Host "Problem retrieving menu items: $($_.Exception.Message)"
-}
-
-# Try Orders API
-
-try {
-    Write-host "Adding an order to the Orders API at $OrdersUrl"
-    # Create a new order for the created user
-    $OrderItems=Invoke-RestMethod -Uri "$OrdersUrl$($UserItems[0].id)" -Method Post
-} catch {
-    Write-Host "Problem adding order: $($_.Exception.Message)"
-}
-try {
-    $OrderAddUrl="$OrdersUrl$($OrderItems[0].id)/add/$($MenuItems[0].id)"
-    #$OrderAddUrl
-
-    #$OrderEntryPayload = $MenuItems[0] | ConvertTo-Json
-    #$OrderEntryPayload 
-    Write-Host "Adding order item using $OrderAddUrl"
-    $AddOrderItemOp=Invoke-RestMethod -Uri $OrderAddUrl -Method Post 
-    $AddOrderItemOp=Invoke-RestMethod -Uri $OrderAddUrl -Method Post 
-    $AddOrderItemOp=Invoke-RestMethod -Uri $OrderAddUrl -Method Post 
-
-
-    #$OrderEntryPayload = $MenuItems[3] | ConvertTo-Json
-    #Invoke-RestMethod -Uri $OrderAddUrl -Method Post -Body $OrderEntryPayload  -ContentType 'application/json'
-} catch {
-    Write-Host "Problem adding order item: $($_.Exception.Message)"
-}
-
-
-try {
-    $OrderRemoveUrl="$OrdersUrl$($OrderItems[0].id)/remove/$($MenuItems[0].id)"
-
-
-    #$OrderEntryPayload = $MenuItems[0] | ConvertTo-Json
-    #$OrderEntryPayload 
-    Write-Host "removing order item using $OrderRemoveUrl"
-    $RemoveOrderItemOp=Invoke-RestMethod -Uri $OrderRemoveUrl -Method Post 
-
-
-
-    #$OrderEntryPayload = $MenuItems[3] | ConvertTo-Json
-    #Invoke-RestMethod -Uri $OrderAddUrl -Method Post -Body $OrderEntryPayload  -ContentType 'application/json'
-} catch {
-    Write-Host "Problem removing order item: $($_.Exception.Message)"
-}
-
-try {
-    $OrderItems=Invoke-RestMethod -Uri $OrdersUrl -Method Get
-    #$OrderItems
-} catch {
-    Write-Host "Problem retrieving order items: $($_.Exception.Message)"
-}
-$OrderItems
-
-#>
+Write-host "To use me, run this first:"
+Write-host "Note: Notice the two dots, this means source the script"
+Write-host ". .\test-client.ps1"
+write-host ""
+write-host "Available functions:"
+Write-host "Get-PizzaMenuEntry"
+Write-host "Add-PizzaMenuEntry -Name <name> -Description <description> -Price <price>"
+Write-host "Get-PizzaOrder"
+Write-host "Add-PizzaOrderItem -OrderId <order id> -ItemId <item id>"
+Write-host "Remove-PizzaOrderItem -OrderId <order id> -ItemId <item id>"
+write-host ""
