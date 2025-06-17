@@ -1,10 +1,15 @@
+# Update the catalog
 sudo apt-update -y
+
+# Install Java
 sudo apt install default-jre -y
+
+# Install Git
 sudo apt install git -y
+
+# Install Maven
 sudo apt install maven -y
+
+# Install MySQL Server
 sudo apt install mysql-server -y
 
-
-#git clone https://github.com/luisfeliz79/cs492project
-#cd cs492project/backend/backend-api
-#mvn clean install
