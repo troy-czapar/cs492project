@@ -11,20 +11,68 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <spring-boot.version>3.4.4</spring-boot.version>
     </properties>
 
     <dependencies>
+
+        <!-- B2C Setup -->
+        <!-- <dependency>
+            <groupId>com.azure.spring</groupId>
+            <artifactId>spring-cloud-azure-starter-active-directory-b2c</artifactId>
+            <version>5.22.0</version>
+        </dependency> -->
+
+        <!-- B2C Setup -->
+        <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency> -->
+
+        <!-- Azure Active Directory Setup -->
+        <dependency>
+            <groupId>com.azure.spring</groupId>
+            <artifactId>spring-cloud-azure-starter-active-directory</artifactId>
+            <version>5.22.0</version>
+        </dependency>
+
+        <!-- Azure Active Directory Setup -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        
+
+
+
+        <!-- Used for RESTful Web Services -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.5.0</version>
+            <version>${spring-boot.version}</version>
         </dependency>
 
+        <!-- Used for Dynamic Content Rendering -->
         <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        <version>3.5.0</version>
+        <version>${spring-boot.version}</version>
         </dependency>
+
+        <dependency> 
+            <groupId>org.thymeleaf.extras</groupId>  
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+            <version>3.1.3.RELEASE</version>
+        </dependency>
+
+
+
+ 
+
+
 
     </dependencies>
         

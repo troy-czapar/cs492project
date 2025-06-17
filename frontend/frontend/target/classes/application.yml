@@ -1,0 +1,21 @@
+spring:
+  http:
+    client:
+      factory: jdk
+  cloud:
+    azure:
+      active-directory:
+          enabled: true
+          profile:
+            tenant-id: 3001f12b-6c76-46cf-8651-972627b83d92
+            environment:
+              active-directory-endpoint: https://pizzaonlineid.ciamlogin.com/
+          post-logout-redirect-uri: https://localhost:8081/
+          credential:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+
+app:
+  protect:
+    authenticated: /token_details
+
