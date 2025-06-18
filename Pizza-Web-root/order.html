@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Genaric Pizza</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The most aggressively normal pizza you'll have.">
+
+</head>
+
+<body>
+<div>
+    <a href="index.html">HOME</a>
+    <a href="menu.html">MENU</a>
+    <a href="login.html">ADMIN LOGIN</a>
+</div>
+
+<div>
+    <p>This page is a form to submit an order:</p>
+    <h1>selection form with prices</h1>
+    <h1>submit and continue</h1>
+    <a href="pay.html">submit and pay</a>
+</div>
+
+<div>
+    <h2> example form</h2>
+    <form action="pay.html">
+    <fieldset>
+      <label for="number-input">Number Selection:</label>
+      <input type="number" id="number-input" name="number-input" min="0" max="100" step="1">
+      <br>
+
+      <label for="time-input">Pickup Time Selection:</label>
+      <input type="time" id="time-input" name="time-input">
+      <br>
+
+
+      <label for="file-input">Upload an order .json for regulars:</label>
+      <input type="file" id="file-input" name="file-input" accept=".json" multiple>
+      <br>
+
+      <label>
+        <input type="checkbox" name="checkbox" value="1">
+        Item selection box
+      </label>
+      <br>
+
+      <label>
+        <input type="radio" name="radio-group" value="option1">
+        Exclusive option 1
+      </label>
+      <br>
+
+      <label>
+        <input type="radio" name="radio-group" value="option2">
+        Exclusive option 2
+      </label>
+      <br>
+
+      <label for="select-input">Drop downs just incase:</label>
+      <select name="select-input" id="select-input">
+        <optgroup label="Label">
+          <option value="1">Predetermined option 1</option>
+          <option value="2">Predetermined option 2</option>
+        </optgroup>
+      </select>
+      <br>
+
+      <label for="textarea">Special requests:</label>
+      <textarea name="textarea" id="textarea" rows="4" cols="40"
+        placeholder="Go on, vent your pathetic frustrations"></textarea>
+      <br>
+    </fieldset>
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+</div>
+</body>
+</html>
