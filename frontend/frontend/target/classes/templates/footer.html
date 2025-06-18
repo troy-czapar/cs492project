@@ -1,0 +1,32 @@
+<hr>
+<b>Authorization checks</b>
+<div sec:authorize="isAuthenticated()">
+  <p>Welcome <span sec:authentication="name">USER</span>, You are logged in!</p>
+  Your Role: <span sec:authentication="principal.authorities">[ROLES]</span>
+<br>
+<br>
+<form action="#" th:action="@{/logout}" method="post">
+  <input class="btn btn-warning" type="submit" value="Sign Out" />
+</form>
+</div>
+<br>
+<div sec:authorize="hasAuthority('APPROLE_customer')">
+  <p>This text only shows if you have the customer role.</p>
+</div>
+<div sec:authorize="hasAuthority('APPROLE_manager')">
+  This text only shows if you have the manager role.
+</div>
+<div sec:authorize="!isAuthenticated()">
+  <p>Not Authenticated, click here to <a class="btn btn-success" href="/login">Sign In</a></p>
+</div>
+<b>Links</b>
+<br>
+<a class="btn btn-success" href="/">Back to Home</a>
+<br>
+<a class="btn btn-success" href="/menu">Menu page</a>
+<br>
+<a class="btn btn-success" href="/cart">Cart page</a>
+<br>
+<a class="btn btn-success" href="/token_details">ID Token Details</a>
+<br>
+<!-- <a class="btn btn-success" href="/manager">Manager area</a> -->

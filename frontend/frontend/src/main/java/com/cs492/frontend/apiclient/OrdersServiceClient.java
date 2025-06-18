@@ -2,6 +2,8 @@ package com.cs492.frontend.apiclient;
 
 import java.util.ArrayList;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -69,6 +71,30 @@ public class OrdersServiceClient {
         return itemsArray;
     }
 
+    public void addOrderItem(Long id, Long orderId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = apiUrl + orderId + "/add/" + id ;
+        Object order = restTemplate.execute(url, HttpMethod.POST, null, response -> {
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                throw new RuntimeException("Failed to add order item: " + response.getStatusCode());
+            }
+        });
+         
+    }
+    public void removeOrderItem(Long id, Long orderId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = apiUrl + orderId + "/remove/" + id ;
+        Object order = restTemplate.execute(url, HttpMethod.POST, null, response -> {
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                throw new RuntimeException("Failed to remove order item: " + response.getStatusCode());
+            }
+        });
+         
+    }
     // public MenuEntry[]  getOrderItemsById(Long id) {
     //     RestTemplate restTemplate = new RestTemplate();
     //     String url = apiUrl + id;

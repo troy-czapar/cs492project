@@ -17,5 +17,6 @@ spring:
 
 app:
   protect:
-    authenticated: /token_details
+    authenticated: /token_details, /cart
+
 

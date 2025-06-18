@@ -1,9 +1,8 @@
 package com.cs492.frontend;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
@@ -15,20 +14,24 @@ public class Utilities {
     /**
      * Take a subset of ID Token claims and put them into KV pairs for UI to display.
      * @param principal OidcUser (see SampleController for details)
-     * @return Map of filteredClaims
+     * @return Map of Claims
      */
-    public static Map<String,String> filterClaims(OidcUser principal) {
-        //final String[] claimKeys = {"sub", "aud", "ver", "iss", "name", "oid", "preferred_username"};
-        //final List<String> includeClaims = Arrays.asList(claimKeys);
+    public static Map<String,String> getClaims(OidcUser principal) {
 
-        Map<String,String> filteredClaims = new HashMap<>();
+        Map<String,String> Claims = new HashMap<>();
         // include all claims from the ID token
-        principal.getIdToken().getClaims().forEach((key, value) -> {
-            // if (includeClaims.contains(key)) {
-                filteredClaims.put(key, value.toString());
-            // }
+        principal.getIdToken().getClaims().forEach((key, value) -> {            
+                Claims.put(key, value.toString());            
         });
 
-        return filteredClaims;
+        // include a few claims needed for the Pizza API
+        // convert the sub UUID claim to a long
+        String oid = principal.getAttribute("oid");
+        UUID oid_UUID = UUID.fromString(oid);
+        long cartId = Math.abs(oid_UUID.getLeastSignificantBits());
+
+        Claims.put("cartId", Long.toString(cartId));
+
+        return Claims;
     }
 }

@@ -33,6 +33,14 @@ public class Orders {
     // Get orders by ID
     @GetMapping("/{id}")
     public Optional<OrderEntries> getOrderEntry(@PathVariable("id") Long id) {
+        // Check if the order with the specified ID exists
+        // and if not, this means a new user/cart, create it!
+        if (!orders.existsById(id)) {
+            System.out.println("Order with ID " + id + " does not exist. Creating it!");
+                OrderEntries newOrderEntry = new OrderEntries();
+                newOrderEntry.setId(id);
+                orders.save(newOrderEntry);                
+        }
         return orders.findById(id);
     }
 
